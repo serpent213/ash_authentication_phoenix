@@ -96,6 +96,7 @@ defmodule AshAuthentication.Phoenix.Overrides.Default do
     set :label_class, "mt-2 mb-4 text-2xl tracking-tight font-bold text-gray-900 dark:text-white"
     set :form_class, nil
     set :slot_class, "my-4"
+    set :sign_in_button_text, nil
     set :disable_button_text, "Signing in ..."
   end
 
