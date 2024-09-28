@@ -226,37 +226,39 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
           required(:strategy) => Strategy.t(),
           required(:form) => Form.t(),
           required(:action) => :sign_in | :register,
-          optional(:label) => String.t(),
+          optional(:label) => String.t() | nil,
           optional(:overrides) => [module]
         }) :: Rendered.t() | no_return
   def submit(assigns) do
     assigns =
       assigns
       |> assign_new(:overrides, fn -> [AshAuthentication.Phoenix.Overrides.Default] end)
-      |> assign_new(:label, fn ->
-        case assigns.action do
-          :request_reset ->
-            assigns.strategy.resettable
-            |> Kernel.||(%{})
-            |> Map.get(:request_password_reset_action_name, :reset_request)
-            |> to_string()
-            |> String.trim_trailing("_with_password")
+      |> assign(
+        :label,
+        Map.get(assigns, :label) ||
+          case assigns.action do
+            :request_reset ->
+              assigns.strategy.resettable
+              |> Kernel.||(%{})
+              |> Map.get(:request_password_reset_action_name, :reset_request)
+              |> to_string()
+              |> String.trim_trailing("_with_password")
 
-          :sign_in ->
-            assigns.strategy.sign_in_action_name
-            |> to_string()
-            |> String.trim_trailing("_with_password")
+            :sign_in ->
+              assigns.strategy.sign_in_action_name
+              |> to_string()
+              |> String.trim_trailing("_with_password")
 
-          :register ->
-            assigns.strategy.register_action_name
-            |> to_string()
-            |> String.trim_trailing("_with_password")
+            :register ->
+              assigns.strategy.register_action_name
+              |> to_string()
+              |> String.trim_trailing("_with_password")
 
-          other ->
-            other
-        end
-        |> humanize()
-      end)
+            other ->
+              other
+          end
+          |> humanize()
+      )
       |> assign_new(:disable_text, fn -> nil end)
 
     ~H"""
