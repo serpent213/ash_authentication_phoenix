@@ -88,7 +88,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
 
     ~H"""
     <div class={override_for(@overrides, :field_class)}>
-      {label(@form, @identity_field, override_for(@overrides, :identity_input_label),
+      {label(@form, @identity_field, _gettext(override_for(@overrides, :identity_input_label)),
         class: override_for(@overrides, :label_class)
       )}
       {text_input(@form, @identity_field,
@@ -141,7 +141,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
 
     ~H"""
     <div class={override_for(@overrides, :field_class)}>
-      {label(@form, @password_field, override_for(@overrides, :password_input_label),
+      {label(@form, @password_field, _gettext(override_for(@overrides, :password_input_label)),
         class: override_for(@overrides, :label_class)
       )}
       {password_input(@form, @password_field,
@@ -195,7 +195,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
       {label(
         @form,
         @password_confirmation_field,
-        override_for(@overrides, :password_confirmation_input_label),
+        _gettext(override_for(@overrides, :password_confirmation_input_label)),
         class: override_for(@overrides, :label_class)
       )}
       {password_input(@form, @password_confirmation_field,
@@ -269,9 +269,9 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
       |> assign_new(:disable_text, fn -> nil end)
 
     ~H"""
-    {submit(@label,
+    {submit(_gettext(@label),
       class: override_for(@overrides, :submit_class),
-      phx_disable_with: @disable_text
+      phx_disable_with: _gettext(@disable_text)
     )}
     """
   end

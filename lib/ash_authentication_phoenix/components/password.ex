@@ -308,13 +308,13 @@ defmodule AshAuthentication.Phoenix.Components.Password do
     if assigns[:to] do
       ~H"""
       <.link patch={@to} class={override_for(@overrides, :toggler_class)}>
-        {@message}
+        {_gettext(@message)}
       </.link>
       """
     else
       ~H"""
       <a href="#" phx-click={toggle_js(@show, @hide)} class={override_for(@overrides, :toggler_class)}>
-        {@message}
+        {_gettext(@message)}
       </a>
       """
     end

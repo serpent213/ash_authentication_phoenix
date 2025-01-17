@@ -53,7 +53,8 @@ defmodule AshAuthentication.Phoenix.Components.Apple do
         class={override_for(@overrides, :link_class)}
       >
         <.icon icon={:apple_white} overrides={@overrides} />
-        <.icon icon={:apple_black} overrides={@overrides} /> Sign in with Apple
+        <.icon icon={:apple_black} overrides={@overrides} />
+        {_gettext("Sign in with Apple")}
       </a>
     </div>
     """
