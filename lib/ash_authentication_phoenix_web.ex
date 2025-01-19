@@ -3,7 +3,7 @@ defmodule AshAuthentication.Phoenix.Web do
 
   alias AshAuthentication.Phoenix.{LayoutView, Utils.Flash, Web}
 
-  @gettext_backend Application.compile_env(:ash_authentication_phoenix, :gettext_backend, nil)
+  @gettext_fn Application.compile_env(:ash_authentication_phoenix, :gettext_fn, nil)
 
   @doc false
   def view do
@@ -44,30 +44,35 @@ defmodule AshAuthentication.Phoenix.Web do
     end
   end
 
-  @doc false
-  def maybe_gettext do
-    if @gettext_backend && Code.ensure_loaded?(Gettext) do
-      quote do
-        def _gettext(msgid, args \\ []) do
-          Gettext.dgettext(unquote(@gettext_backend), "auth", msgid, args)
-        end
+  @doc """
+  If a translation function is provided, we generate a `_gettext` function to call that, otherwise provide a dummy.
+  """
+  if @gettext_fn do
+    def maybe_gettext do
+      with {module, function} when is_atom(module) and is_atom(function) <- @gettext_fn do
+        # Does not work:
+        # Code.ensure_compiled!(module)
+        # if !function_exported?(module, function, 2),
+        #   do:
+        #     raise(
+        #       "#{module}.#{function}/2 not exported (config :ash_authentication_phoenix, :translate_fn)"
+        #     )
 
-        def _ngettext(msgid, msgid_plural, count, args \\ []) do
-          Gettext.dngettext(unquote(@gettext_backend), "auth", msgid, msgid_plural, count, args)
+        quote do
+          def _gettext(msgid, bindings \\ []),
+            do: apply(unquote(module), unquote(function), [msgid, bindings])
         end
+      else
+        _ ->
+          raise "#{inspect(@gettext_fn)} is invalid - specify `{module, function}` for a function with a " <>
+                  "`gettext/2` like signature (config :ash_authentication_phoenix, :gettext_fn)"
       end
-    else
+    end
+  else
+    def maybe_gettext do
       quote do
-        def _gettext(msgid, args \\ []) do
-          for {key, value} <- args, reduce: msgid do
-            acc -> String.replace(acc, "%{#{key}}", to_string(value))
-          end
-        end
-
-        def _ngettext(msgid, msgid_plural, count, args \\ []) do
-          msg = if count == 1, do: msgid, else: msgid_plural
-
-          for {key, value} <- args, reduce: msg do
+        def _gettext(msgid, bindings \\ []) do
+          for {key, value} <- bindings, reduce: msgid do
             acc -> String.replace(acc, "%{#{key}}", to_string(value))
           end
         end
