@@ -31,7 +31,8 @@ defmodule AshAuthentication.Phoenix.Components.OAuth2 do
   @type props :: %{
           required(:strategy) => AshAuthentication.Strategy.t(),
           optional(:overrides) => [module],
-          optional(:auth_routes_prefix) => String.t()
+          optional(:auth_routes_prefix) => String.t(),
+          optional(:gettext_fn) => {module, atom}
         }
 
   @doc false

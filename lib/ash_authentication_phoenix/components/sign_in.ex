@@ -51,7 +51,8 @@ defmodule AshAuthentication.Phoenix.Components.SignIn do
           optional(:reset_path) => String.t(),
           optional(:register_path) => String.t(),
           optional(:current_tenant) => String.t(),
-          optional(:context) => map()
+          optional(:context) => map(),
+          optional(:gettext_fn) => {module, atom}
         }
 
   @doc false
@@ -95,7 +96,12 @@ defmodule AshAuthentication.Phoenix.Components.SignIn do
     ~H"""
     <div class={override_for(@overrides, :root_class)}>
       <%= if override_for(@overrides, :show_banner, true) do %>
-        <.live_component module={Components.Banner} id="sign-in-banner" overrides={@overrides} />
+        <.live_component
+          module={Components.Banner}
+          id="sign-in-banner"
+          overrides={@overrides}
+          gettext_fn={@gettext_fn}
+        />
       <% end %>
 
       <%= for {strategies, i} <- Enum.with_index(@strategies_by_resource) do %>
@@ -112,6 +118,7 @@ defmodule AshAuthentication.Phoenix.Components.SignIn do
               overrides={@overrides}
               current_tenant={@current_tenant}
               context={@context}
+              gettext_fn={@gettext_fn}
             />
           <% end %>
         <% end %>
@@ -137,6 +144,7 @@ defmodule AshAuthentication.Phoenix.Components.SignIn do
               overrides={@overrides}
               current_tenant={@current_tenant}
               context={@context}
+              gettext_fn={@gettext_fn}
             />
           <% end %>
         <% end %>
@@ -160,6 +168,7 @@ defmodule AshAuthentication.Phoenix.Components.SignIn do
         overrides={@overrides}
         current_tenant={@current_tenant}
         context={@context}
+        gettext_fn={@gettext_fn}
       />
     </div>
     """

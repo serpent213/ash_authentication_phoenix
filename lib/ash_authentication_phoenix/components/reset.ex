@@ -31,7 +31,8 @@ defmodule AshAuthentication.Phoenix.Components.Reset do
 
   @type props :: %{
           required(:token) => String.t(),
-          optional(:overrides) => [module]
+          optional(:overrides) => [module],
+          optional(:gettext_fn) => {module, atom}
         }
 
   @doc false
@@ -65,7 +66,12 @@ defmodule AshAuthentication.Phoenix.Components.Reset do
     ~H"""
     <div class={override_for(@overrides, :root_class)}>
       <%= if override_for(@overrides, :show_banner, true) do %>
-        <.live_component module={Components.Banner} id="sign-in-banner" overrides={@overrides} />
+        <.live_component
+          module={Components.Banner}
+          id="sign-in-banner"
+          overrides={@overrides}
+          gettext_fn={@gettext_fn}
+        />
       <% end %>
 
       <%= for strategy <- @strategies do %>
@@ -78,6 +84,7 @@ defmodule AshAuthentication.Phoenix.Components.Reset do
             id="reset-form"
             label={false}
             overrides={@overrides}
+            gettext_fn={@gettext_fn}
           />
         </div>
       <% end %>

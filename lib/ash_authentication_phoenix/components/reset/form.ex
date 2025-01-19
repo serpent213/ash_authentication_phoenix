@@ -48,7 +48,8 @@ defmodule AshAuthentication.Phoenix.Components.Reset.Form do
           required(:token) => String.t(),
           optional(:label) => String.t() | false,
           optional(:overrides) => [module],
-          optional(:auth_routes_prefix) => String.t()
+          optional(:auth_routes_prefix) => String.t(),
+          optional(:gettext_fn) => {module, atom}
         }
 
   @doc false
@@ -118,12 +119,27 @@ defmodule AshAuthentication.Phoenix.Components.Reset.Form do
         class={override_for(@overrides, :form_class)}
       >
         {hidden_input(form, :reset_token, value: @token)}
-        <Input.error field={:reset_token} form={@form} overrides={@overrides} />
+        <Input.error
+          field={:reset_token}
+          form={@form}
+          overrides={@overrides}
+          gettext_fn={@gettext_fn}
+        />
 
-        <Input.password_field strategy={@strategy} form={form} overrides={@overrides} />
+        <Input.password_field
+          strategy={@strategy}
+          form={form}
+          overrides={@overrides}
+          gettext_fn={@gettext_fn}
+        />
 
         <%= if @strategy.confirmation_required? do %>
-          <Input.password_confirmation_field strategy={@strategy} form={form} overrides={@overrides} />
+          <Input.password_confirmation_field
+            strategy={@strategy}
+            form={form}
+            overrides={@overrides}
+            gettext_fn={@gettext_fn}
+          />
         <% end %>
 
         <div class={override_for(@overrides, :spacer_class)}></div>
@@ -134,6 +150,7 @@ defmodule AshAuthentication.Phoenix.Components.Reset.Form do
           action={:reset}
           disable_text={_gettext(override_for(@overrides, :disable_button_text))}
           overrides={@overrides}
+          gettext_fn={@gettext_fn}
         />
       </.form>
     </div>

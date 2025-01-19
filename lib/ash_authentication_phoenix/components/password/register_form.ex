@@ -46,7 +46,8 @@ defmodule AshAuthentication.Phoenix.Components.Password.RegisterForm do
           optional(:live_action) => :sign_in | :register,
           optional(:current_tenant) => String.t(),
           optional(:context) => map(),
-          optional(:auth_routes_prefix) => String.t()
+          optional(:auth_routes_prefix) => String.t(),
+          optional(:gettext_fn) => {module, atom}
         }
 
   @doc false
@@ -110,11 +111,26 @@ defmodule AshAuthentication.Phoenix.Components.Password.RegisterForm do
         method="POST"
         class={override_for(@overrides, :form_class)}
       >
-        <Input.identity_field strategy={@strategy} form={form} overrides={@overrides} />
-        <Input.password_field strategy={@strategy} form={form} overrides={@overrides} />
+        <Input.identity_field
+          strategy={@strategy}
+          form={form}
+          overrides={@overrides}
+          gettext_fn={@gettext_fn}
+        />
+        <Input.password_field
+          strategy={@strategy}
+          form={form}
+          overrides={@overrides}
+          gettext_fn={@gettext_fn}
+        />
 
         <%= if @strategy.confirmation_required? do %>
-          <Input.password_confirmation_field strategy={@strategy} form={form} overrides={@overrides} />
+          <Input.password_confirmation_field
+            strategy={@strategy}
+            form={form}
+            overrides={@overrides}
+            gettext_fn={@gettext_fn}
+          />
         <% end %>
 
         <%= if @inner_block do %>
@@ -129,6 +145,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.RegisterForm do
           action={:register}
           disable_text={override_for(@overrides, :disable_button_text)}
           overrides={@overrides}
+          gettext_fn={@gettext_fn}
         />
       </.form>
     </div>

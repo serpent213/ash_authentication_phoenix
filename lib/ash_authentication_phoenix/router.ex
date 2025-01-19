@@ -211,6 +211,7 @@ defmodule AshAuthentication.Phoenix.Router do
             | {:as, atom}
             | {:overrides, [module]}
             | {:on_mount, [module]}
+            | {:gettext_fn, {module, atom}}
             | {atom, any}
           ]
         ) :: Macro.t()
@@ -224,6 +225,7 @@ defmodule AshAuthentication.Phoenix.Router do
     {reset_path, opts} = Keyword.pop(opts, :reset_path)
     {register_path, opts} = Keyword.pop(opts, :register_path)
     {auth_routes_prefix, opts} = Keyword.pop(opts, :auth_routes_prefix)
+    {gettext_fn, opts} = Keyword.pop(opts, :gettext_fn)
 
     {overrides, opts} =
       Keyword.pop(opts, :overrides, [AshAuthentication.Phoenix.Overrides.Default])
@@ -279,7 +281,8 @@ defmodule AshAuthentication.Phoenix.Router do
                  "otp_app" => unquote(otp_app),
                  "path" => sign_in_path,
                  "reset_path" => reset_path,
-                 "register_path" => register_path
+                 "register_path" => register_path,
+                 "gettext_fn" => unquote(gettext_fn)
                }
              ]},
           on_mount: on_mount

@@ -57,7 +57,8 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
           required(:strategy) => Strategy.t(),
           required(:form) => Form.t(),
           optional(:input_type) => :text | :email,
-          optional(:overrides) => [module]
+          optional(:overrides) => [module],
+          optional(:gettext_fn) => {module, atom}
         }) :: Rendered.t() | no_return
   def identity_field(assigns) do
     identity_field = assigns.strategy.identity_field
@@ -119,7 +120,8 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
           required(:socket) => Socket.t(),
           required(:strategy) => Strategy.t(),
           required(:form) => Form.t(),
-          optional(:overrides) => [module]
+          optional(:overrides) => [module],
+          optional(:gettext_fn) => {module, atom}
         }) :: Rendered.t() | no_return
   def password_field(assigns) do
     password_field = assigns.strategy.password_field
@@ -170,7 +172,8 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
           required(:socket) => Socket.t(),
           required(:strategy) => Strategy.t(),
           required(:form) => Form.t(),
-          optional(:overrides) => [module]
+          optional(:overrides) => [module],
+          optional(:gettext_fn) => {module, atom}
         }) :: Rendered.t() | no_return
   def password_confirmation_field(assigns) do
     password_confirmation_field = assigns.strategy.password_confirmation_field
@@ -229,7 +232,8 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
           required(:form) => Form.t(),
           required(:action) => :sign_in | :register,
           optional(:label) => String.t(),
-          optional(:overrides) => [module]
+          optional(:overrides) => [module],
+          optional(:gettext_fn) => {module, atom}
         }) :: Rendered.t() | no_return
   def submit(assigns) do
     assigns =
@@ -292,7 +296,8 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
           required(:form) => Form.t(),
           required(:field) => atom,
           optional(:field_label) => String.Chars.t(),
-          optional(:errors) => [{atom, String.t()}]
+          optional(:errors) => [{atom, String.t()}],
+          optional(:gettext_fn) => {module, atom}
         }) :: Rendered.t() | no_return
   def error(assigns) do
     assigns =
@@ -310,7 +315,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
       <ul class={override_for(@overrides, :error_ul)}>
         <%= for error <- @errors do %>
           <li class={override_for(@overrides, :error_li)} phx-feedback-for={input_name(@form, @field)}>
-            {error}
+            {_gettext(error)}
           </li>
         <% end %>
       </ul>

@@ -29,7 +29,8 @@ defmodule AshAuthentication.Phoenix.Components.Apple do
 
   @type props :: %{
           required(:strategy) => AshAuthentication.Strategy.t(),
-          optional(:overrides) => [module]
+          optional(:overrides) => [module],
+          optional(:gettext_fn) => {module, atom}
         }
 
   @doc false
