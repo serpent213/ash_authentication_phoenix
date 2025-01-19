@@ -95,7 +95,7 @@ defmodule AshAuthentication.Phoenix.Components.Reset.Form do
     ~H"""
     <div class={override_for(@overrides, :root_class)}>
       <%= if @label do %>
-        <h2 class={override_for(@overrides, :label_class)}>{@label}</h2>
+        <h2 class={override_for(@overrides, :label_class)}>{_gettext(@label)}</h2>
       <% end %>
 
       <.form
@@ -132,7 +132,7 @@ defmodule AshAuthentication.Phoenix.Components.Reset.Form do
           strategy={@strategy}
           form={form}
           action={:reset}
-          disable_text={override_for(@overrides, :disable_button_text)}
+          disable_text={_gettext(override_for(@overrides, :disable_button_text))}
           overrides={@overrides}
         />
       </.form>

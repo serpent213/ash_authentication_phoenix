@@ -168,7 +168,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.ResetForm do
     socket =
       if flash do
         socket
-        |> put_flash!(:info, flash)
+        |> put_flash!(:info, _gettext(flash))
       else
         socket
       end
