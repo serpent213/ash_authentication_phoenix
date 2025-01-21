@@ -14,26 +14,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "Email"
-msgstr "Email"
-
 msgid "Already have an account?"
 msgstr "Bereit zum Anmelden?"
 
-msgid "Request password reset"
-msgstr "Passwort zurücksetzen"
+msgid "Email or password was incorrect"
+msgstr "Email oder Passwort nicht korrekt"
 
-msgid "Requesting ..."
-msgstr "Anfrage låuft..."
+msgid "Email"
+msgstr "Email"
+
+msgid "Forgot your password?"
+msgstr "Passwort vergessen?"
+
+msgid "If this user exists in our database you will contacted with a sign-in link shortly."
+msgstr "Falls dieser Benutzer bekannt ist, wird jetzt eine Email mit Anmelde-Link versendet."
+
+msgid "If this user exists in our system, you will be contacted with reset instructions shortly."
+msgstr "Falls dieser Benutzer bekannt ist, wird jetzt eine Email mit einer Anleitung zum Zurücksetzen versendet."
+
+msgid "Need an account?"
+msgstr "Konto anlegen?"
 
 msgid "Password"
 msgstr "Passwort"
 
-msgid "Forgot your password?"
-msgstr "Passwort vergessen?"
+msgid "Password Confirmation"
+msgstr "Passwort Wiederholung"
+
+msgid "Request magic link"
+msgstr "Magischen Link anfordern"
+
+msgid "Request password reset token"
+msgstr "Passwort zurücksetzen"
+
+msgid "Requesting ..."
+msgstr "Anfrage låuft..."
 
 msgid "Sign in"
 msgstr "Anmelden"
 
 msgid "Signing in ..."
 msgstr "Anmelden..."
+
+msgid "Your password has successfully been reset"
+msgstr "Das Passwort wurde erfolgreich zurückgesetzt"
