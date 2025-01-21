@@ -47,8 +47,11 @@ defmodule AshAuthentication.Phoenix.Web do
   """
   def maybe_translate do
     quote do
-      @spec _gettext(String.t() | nil, Keyword.t()) :: String.t()
-      defmacro _gettext(msgid, bindings \\ []) do
+      @spec _gettext(String.t() | nil, Keyword.t()) :: any | no_return
+      defmacro _gettext(msgid, bindings \\ [])
+      defmacro _gettext(nil, bindings), do: ""
+
+      defmacro _gettext(msgid, bindings) do
         gettext_fn =
           cond do
             Macro.Env.has_var?(__CALLER__, {:assigns, nil}) ->
@@ -58,39 +61,44 @@ defmodule AshAuthentication.Phoenix.Web do
               quote do: var!(socket).assigns[:gettext_fn]
 
             true ->
-              raise "_gettext requires variable \"socket\" or \"assigns\" to exist and be set to a map"
+              raise ~S{_gettext requires variable "socket" or "assigns" to exist and be set to a map}
           end
 
         quote generated: true do
           case unquote(msgid) do
             nil ->
               ""
+
             msg ->
-              AshAuthentication.Phoenix.Web.gettext_switch( unquote(gettext_fn), msg, unquote(bindings))
+              Web.gettext_switch(
+                unquote(gettext_fn),
+                msg,
+                unquote(bindings)
+              )
           end
         end
       end
     end
   end
 
+  @spec gettext_switch({module, atom} | nil, String.t(), keyword) :: String.t()
   @doc """
   If a translation function is provided, we call that, otherwise return the input untranslated.
   """
-  def gettext_switch(gettext_fn, msgid, bindings) do
-    if gettext_fn do
-      with {module, function} when is_atom(module) and is_atom(function) <-
-             gettext_fn do
-        apply(module, function, [msgid, bindings])
-      else
-        _ ->
-          raise "gettext_fn: #{inspect(gettext_fn)} is invalid - specify `{module, function}` " <>
-                  "for a function with a `gettext/2` like signature"
-      end
-    else
-      for {key, value} <- bindings, reduce: msgid do
-        acc -> String.replace(acc, "%{#{key}}", to_string(value))
-      end
+  def gettext_switch({module, function}, msgid, bindings)
+      when is_atom(module) and is_atom(function) do
+    apply(module, function, [msgid, bindings])
+  end
+
+  def gettext_switch(nil, msgid, bindings) do
+    for {key, value} <- bindings, reduce: msgid do
+      acc -> String.replace(acc, "%{#{key}}", to_string(value))
     end
+  end
+
+  def gettext_switch(invalid, _msgid, _bindings) do
+    raise "gettext_fn: #{inspect(invalid)} is invalid - specify `{module, function}` " <>
+            "for a function with a `gettext/2` like signature"
   end
 
   @doc """

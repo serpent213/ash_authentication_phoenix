@@ -30,6 +30,8 @@ defmodule AshAuthentication.Phoenix.Components.Reset.Form do
     * `label` - The text to show in the submit label. Generated from the
       configured action name (via `Phoenix.Naming.humanize/1`) if not
       supplied. Set to `false` to disable.
+    * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
 
   #{AshAuthentication.Phoenix.Overrides.Overridable.generate_docs()}
   """
@@ -47,8 +49,8 @@ defmodule AshAuthentication.Phoenix.Components.Reset.Form do
           required(:strategy) => AshAuthentication.Strategy.t(),
           required(:token) => String.t(),
           optional(:label) => String.t() | false,
-          optional(:overrides) => [module],
           optional(:auth_routes_prefix) => String.t(),
+          optional(:overrides) => [module],
           optional(:gettext_fn) => {module, atom}
         }
 

@@ -33,6 +33,7 @@ defmodule AshAuthentication.Phoenix.Components.Password do
     * `strategy` - The strategy configuration as per
       `AshAuthentication.Info.strategy/2`.  Required.
     * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
 
   ## Slots
 
@@ -80,11 +81,11 @@ defmodule AshAuthentication.Phoenix.Components.Password do
 
   @type props :: %{
           required(:strategy) => AshAuthentication.Strategy.t(),
-          optional(:overrides) => [module],
           optional(:live_action) => :sign_in | :register,
           optional(:path) => String.t(),
           optional(:current_tenant) => String.t(),
           optional(:context) => map(),
+          optional(:overrides) => [module],
           optional(:gettext_fn) => {module, atom}
         }
 

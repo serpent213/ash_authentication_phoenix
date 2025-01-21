@@ -19,6 +19,7 @@ defmodule AshAuthentication.Phoenix.Components.Reset do
 
     * `token` - The reset token.
     * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
     * `otp_app` - The otp app to look for authenticated resources in
 
   #{AshAuthentication.Phoenix.Overrides.Overridable.generate_docs()}

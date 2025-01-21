@@ -50,6 +50,9 @@ msgstr "Passwort zurücksetzen"
 msgid "Requesting ..."
 msgstr "Anfrage låuft..."
 
+msgid "Reset password with token"
+msgstr "Neues Passwort setzen"
+
 msgid "Sign in"
 msgstr "Anmelden"
 

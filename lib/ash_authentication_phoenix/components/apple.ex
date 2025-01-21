@@ -17,6 +17,7 @@ defmodule AshAuthentication.Phoenix.Components.Apple do
     * `strategy` - The strategy configuration as per
       `AshAuthentication.Info.strategy/2`.  Required.
     * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
 
   #{AshAuthentication.Phoenix.Overrides.Overridable.generate_docs()}
   """

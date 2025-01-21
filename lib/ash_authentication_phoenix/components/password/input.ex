@@ -51,6 +51,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
     * `input_type` - Either `:text` or `:email`.
       If not set it will try and guess based on the name of the identity field.
     * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
   """
   @spec identity_field(%{
           required(:socket) => Socket.t(),
@@ -115,6 +116,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
       `AshAuthentication.authenticated_resources/1`.  Required.
     * `form` - An `AshPhoenix.Form`.  Required.
     * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
   """
   @spec password_field(%{
           required(:socket) => Socket.t(),
@@ -167,6 +169,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
       `AshAuthentication.authenticated_resources/1`.  Required.
     * `form` - An `AshPhoenix.Form`.  Required.
     * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
   """
   @spec password_confirmation_field(%{
           required(:socket) => Socket.t(),
@@ -225,6 +228,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
     * `label` - The text to show in the submit label.  Generated from the
       configured action name (via `Phoenix.Naming.humanize/1`) if not supplied.
     * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
   """
   @spec submit(%{
           required(:socket) => Socket.t(),
@@ -290,6 +294,7 @@ defmodule AshAuthentication.Phoenix.Components.Password.Input do
     * `form` - An `AshPhoenix.Form`.  Required.
     * `field` - The field for which to retrieve the errors.  Required.
     * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
   """
   @spec error(%{
           required(:socket) => Socket.t(),

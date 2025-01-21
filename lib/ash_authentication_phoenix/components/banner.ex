@@ -18,6 +18,7 @@ defmodule AshAuthentication.Phoenix.Components.Banner do
   ## Props
 
     * `overrides` - A list of override modules.
+    * `gettext_fn` - Optional text translation function.
 
   #{AshAuthentication.Phoenix.Overrides.Overridable.generate_docs()}
   """
